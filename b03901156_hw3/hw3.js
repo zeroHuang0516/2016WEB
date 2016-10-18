@@ -36,3 +36,6 @@ app.use(bodyParser.json());
 app.post('/api/body', function (req, res) {
   res.send(JSON.stringify(req.body));
 });
+
+//  picture read
+app.use(express.static(__dirname + '/public'));
