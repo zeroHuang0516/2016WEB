@@ -29,3 +29,10 @@ app.get('/api/users/:id', function (req, res) {
     });
   }
 });
+
+//  post
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.post('/api/body', function (req, res) {
+  res.send(JSON.stringify(req.body));
+});
