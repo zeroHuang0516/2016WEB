@@ -1,16 +1,16 @@
 const bodyParser = require('body-parser');
-const fs = require('fs');
 const express = require('express');
 const app = express();
 
 //  return html
 app.get('/', function (req, res) {
-  const output = ('<h1>­º­¶</h1>');
-  fs.writeFile('./index.html', 'utf8', output, (err) => {
-    if (err) throw err;
-  });
+  res.send('<h1>­º­¶</h1>');
 });
 
+//  return x,y
+app.get('/api/query', function (req, res) {
+  res.json(req.query);
+});
 //  return userID
 app.get('/api/users/:id', function (req, res) {
   var _id = req.params.id;
@@ -30,16 +30,15 @@ app.get('/api/users/:id', function (req, res) {
   }
 });
 
+
 //  post
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.post('/api/body', function (req, res) {
   res.send(JSON.stringify(req.body));
 });
-
 //  picture read
-app.use(express.static(__dirname + '/public'));
-
+app.use('/public', express.static(`${__dirname}/public`));
 //  error
 app.use(function (req, res, next) {
   res.status(404).send('404 status');
