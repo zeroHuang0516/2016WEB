@@ -39,3 +39,12 @@ app.post('/api/body', function (req, res) {
 
 //  picture read
 app.use(express.static(__dirname + '/public'));
+
+//  error
+app.use(function (req, res, next) {
+  res.status(404).send('404 status');
+});
+
+app.listen(3000, function () {
+  console.log('Listening on port 3000!');
+});
