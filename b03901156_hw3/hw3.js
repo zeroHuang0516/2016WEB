@@ -11,3 +11,21 @@ app.get('/', function (req, res) {
   });
 });
 
+//  return userID
+app.get('/api/users/:id', function (req, res) {
+  var _id = req.params.id;
+  if(_id === '1') {
+    res.json({
+      id: parseInt(_id),
+      name: 'Joe',
+      age: 18,
+    });
+  }
+  else if (_id === '2') {
+    res.json({
+      id: parseInt(_id),
+      name: 'John',
+      age: 22,
+    });
+  }
+});
