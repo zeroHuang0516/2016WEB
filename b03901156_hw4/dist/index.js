@@ -11,184 +11,221 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _React = React,
     Component = _React.Component;
 
-//stateless objects
+var TodoApp = function (_React$Component) {
+  _inherits(TodoApp, _React$Component);
+
+  function TodoApp(props) {
+    _classCallCheck(this, TodoApp);
+
+    var _this = _possibleConstructorReturn(this, (TodoApp.__proto__ || Object.getPrototypeOf(TodoApp)).call(this, props));
+
+    _this.state = { count: 0, todoList: [] };
+
+    // bind
+    _this.createNewList = _this.createNewList.bind(_this);
+    return _this;
+  }
+
+  _createClass(TodoApp, [{
+    key: "createNewList",
+    value: function createNewList(listItem) {
+      var newList = this.state.todoList.slice();
+      newList.push(listItem);
+      this.setState({
+        count: this.state.count + 1,
+        todoList: newList
+      });
+    } // another way: this.setState({count: this.state.count+1;
+    // todoList: this.state.todoList.concat([{text: listItem}])})
+
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "section",
+        { className: "todoapp" },
+        React.createElement(HEADER, { createNewList: this.createNewList }),
+        React.createElement(MAIN, { count: this.state.count, todoList: this.state.todoList }),
+        React.createElement(FOOTER, { count: this.state.count })
+      );
+    }
+  }]);
+
+  return TodoApp;
+}(React.Component);
 
 HEADER.propTypes = {
-	createNewList: React.PropTypes.func.isRequired
+  createNewList: React.PropTypes.func.isRequired
 };
 
-var HEADER = function (_React$Component) {
-	_inherits(HEADER, _React$Component);
+var HEADER = function (_Component) {
+  _inherits(HEADER, _Component);
 
-	function HEADER(props) {
-		_classCallCheck(this, HEADER);
+  function HEADER(props) {
+    _classCallCheck(this, HEADER);
 
-		var _this = _possibleConstructorReturn(this, (HEADER.__proto__ || Object.getPrototypeOf(HEADER)).call(this, props));
+    var _this2 = _possibleConstructorReturn(this, (HEADER.__proto__ || Object.getPrototypeOf(HEADER)).call(this, props));
 
-		_this.handleEnter = _this.handleEnter.bind(_this);
-		return _this;
-	}
+    _this2.handleEnter = _this2.handleEnter.bind(_this2);
+    return _this2;
+  }
 
-	_createClass(HEADER, [{
-		key: "handleEnter",
-		value: function handleEnter(ele) {
-			if (eve.keyCode === 13 && ele.target.value != "") {
-				this.props.createNewList(ele.target.value);
-			}
-		}
-	}, {
-		key: "render",
-		value: function render() {
-			return React.createElement(
-				"header",
-				{ className: "header" },
-				React.createElement(
-					"h1",
-					null,
-					"todos"
-				),
-				React.createElement("input", { className: "new-todo", onKeyDown: this.handleEnter, placeholder: "What needs to be done?", autofocus: true })
-			);
-		}
-	}]);
+  _createClass(HEADER, [{
+    key: "handleEnter",
+    value: function handleEnter(ele) {
+      if (eve.keyCode === 13 && ele.target.value !== '') {
+        this.props.createNewList(ele.target.value);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "header",
+        { className: "header" },
+        React.createElement(
+          "h1",
+          null,
+          "todos"
+        ),
+        React.createElement("input", {
+          className: "new-todo",
+          onKeyDown: this.handleEnter,
+          placeholder: "What needs to be done?",
+          autoFocus: true })
+      );
+    }
+  }]);
 
-	return HEADER;
-}(React.Component);
+  return HEADER;
+}(Component);
 
-var MAIN = function (_React$Component2) {
-	_inherits(MAIN, _React$Component2);
+var MAIN = function (_Component2) {
+  _inherits(MAIN, _Component2);
 
-	function MAIN() {
-		_classCallCheck(this, MAIN);
+  function MAIN() {
+    _classCallCheck(this, MAIN);
 
-		return _possibleConstructorReturn(this, (MAIN.__proto__ || Object.getPrototypeOf(MAIN)).apply(this, arguments));
-	}
+    return _possibleConstructorReturn(this, (MAIN.__proto__ || Object.getPrototypeOf(MAIN)).apply(this, arguments));
+  }
 
-	_createClass(MAIN, [{
-		key: "render",
-		value: function render() {
-			return React.createElement(
-				"section",
-				{ className: "main" },
-				React.createElement("input", { className: "toggle-all", type: "checkbox" }),
-				React.createElement(
-					"label",
-					{ htmlfor: "toggle-all" },
-					"Mark all as complete"
-				),
-				React.createElement(LIST, { count: this.props.count, listItem: this.props.listItem })
-			);
-		}
-	}]);
+  _createClass(MAIN, [{
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "section",
+        { className: "main" },
+        React.createElement("input", { className: "toggle-all", type: "checkbox" }),
+        React.createElement(
+          "label",
+          { htmlFor: "toggle-all" },
+          "Mark all as complete"
+        ),
+        React.createElement(LIST, { count: this.props.count, listItem: this.props.listItem })
+      );
+    }
+  }]);
 
-	return MAIN;
-}(React.Component);
+  return MAIN;
+}(Component);
 
-var LIST = function (_React$Component3) {
-	_inherits(LIST, _React$Component3);
+var TodoItem = function (_Component3) {
+  _inherits(TodoItem, _Component3);
 
-	function LIST() {
-		_classCallCheck(this, LIST);
+  function TodoItem() {
+    _classCallCheck(this, TodoItem);
 
-		return _possibleConstructorReturn(this, (LIST.__proto__ || Object.getPrototypeOf(LIST)).apply(this, arguments));
-	}
+    return _possibleConstructorReturn(this, (TodoItem.__proto__ || Object.getPrototypeOf(TodoItem)).apply(this, arguments));
+  }
 
-	_createClass(LIST, [{
-		key: "render",
-		value: function render() {
-			return React.createElement(
-				"ul",
-				{ className: "todo-list" },
-				this.props.todoList.map(function (i) {
-					return React.createElement(
-						"li",
-						null,
-						this.props.i['listItem']
-					);
-				})
-			);
-		}
-	}]);
+  _createClass(TodoItem, [{
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "li",
+        null,
+        this.props.text
+      );
+    }
+  }]);
 
-	return LIST;
-}(React.Component);
+  return TodoItem;
+}(Component);
 
-var FOOTER = function (_React$Component4) {
-	_inherits(FOOTER, _React$Component4);
+var LIST = function (_Component4) {
+  _inherits(LIST, _Component4);
 
-	function FOOTER() {
-		_classCallCheck(this, FOOTER);
+  function LIST() {
+    _classCallCheck(this, LIST);
 
-		return _possibleConstructorReturn(this, (FOOTER.__proto__ || Object.getPrototypeOf(FOOTER)).apply(this, arguments));
-	}
+    return _possibleConstructorReturn(this, (LIST.__proto__ || Object.getPrototypeOf(LIST)).apply(this, arguments));
+  }
 
-	_createClass(FOOTER, [{
-		key: "render",
-		value: function render() {
-			return React.createElement(
-				"footer",
-				{ className: "footer" },
-				React.createElement(
-					"span",
-					{ className: "todo-count" },
-					this.props.count
-				),
-				React.createElement(
-					"button",
-					{ "class": "clear-completed" },
-					"Clear completed"
-				)
-			);
-		}
-	}]);
+  _createClass(LIST, [{
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "ul",
+        { className: "todo-list" },
+        this.props.todoList.map(function (i) {
+          return React.createElement(TodoItem, { listItem: i.listItem });
+        })
+      );
+    }
+  }]);
 
-	return FOOTER;
-}(React.Component);
+  return LIST;
+}(Component);
 
-var TodoApp = function (_React$Component5) {
-	_inherits(TodoApp, _React$Component5);
+var CountDisplay = function (_Component5) {
+  _inherits(CountDisplay, _Component5);
 
-	function TodoApp(props) {
-		_classCallCheck(this, TodoApp);
+  function CountDisplay() {
+    _classCallCheck(this, CountDisplay);
 
-		var _this5 = _possibleConstructorReturn(this, (TodoApp.__proto__ || Object.getPrototypeOf(TodoApp)).call(this, props));
+    return _possibleConstructorReturn(this, (CountDisplay.__proto__ || Object.getPrototypeOf(CountDisplay)).apply(this, arguments));
+  }
 
-		_this5.state = { count: 0, todoList: [] };
+  _createClass(CountDisplay, [{
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "span",
+        { className: "todo-count" },
+        this.props.count
+      );
+    }
+  }]);
 
-		//bind
-		_this5.createNewList = _this5.createNewList.bind(_this5);
-		return _this5;
-	}
+  return CountDisplay;
+}(Component);
 
-	_createClass(TodoApp, [{
-		key: "createNewList",
-		value: function createNewList(listItem) {
-			var newList = this.state.todoList.slice();
-			newList.push(listItem);
-			this.setState({
-				count: this.state.count + 1,
-				todoList: newList
-			});
-		} //another way: this.setState({count: this.state.count+1; todoList: this.state.todoList.concat([{text: listItem}])})
+var FOOTER = function (_Component6) {
+  _inherits(FOOTER, _Component6);
 
+  function FOOTER() {
+    _classCallCheck(this, FOOTER);
 
-	}, {
-		key: "render",
-		value: function render() {
-			return React.createElement(
-				"section",
-				{ className: "todoapp" },
-				React.createElement(HEADER, { createNewList: this.createNewList }),
-				React.createElement(MAIN, { count: this.state.count, todoList: this.state.todoList }),
-				React.createElement(FOOTER, { count: this.state.count })
-			);
-		}
-	}]);
+    return _possibleConstructorReturn(this, (FOOTER.__proto__ || Object.getPrototypeOf(FOOTER)).apply(this, arguments));
+  }
 
-	return TodoApp;
-}(React.Component);
+  _createClass(FOOTER, [{
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "footer",
+        { className: "footer" },
+        React.createElement(CountDisplay, { count: this.props.count }),
+        React.createElement(
+          "button",
+          { className: "clear-completed" },
+          "Clear completed"
+        )
+      );
+    }
+  }]);
 
-/*ReactDOM.render(
-  <TodoApp/>,
-  document.getElementById('root')
-);*/
+  return FOOTER;
+}(Component);
+
+ReactDOM.render(React.createElement(TodoApp, null), document.getElementById('root'));

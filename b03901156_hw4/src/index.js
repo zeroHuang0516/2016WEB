@@ -1,4 +1,34 @@
 const { Component } = React;
+
+class TodoApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0, todoList: [] };
+
+  // bind
+    this.createNewList = this.createNewList.bind(this);
+  }
+
+  createNewList(listItem) {
+    const newList = this.state.todoList.slice();
+    newList.push(listItem);
+    this.setState({
+      count: this.state.count + 1,
+      todoList: newList,
+    });
+  } // another way: this.setState({count: this.state.count+1;
+    // todoList: this.state.todoList.concat([{text: listItem}])})
+  render() {
+    return (
+      <section className="todoapp">
+        <HEADER createNewList={this.createNewList} / >
+        <MAIN count={this.state.count} todoList={this.state.todoList} / >
+        <FOOTER count={this.state.count} / >
+      </section>
+  );
+  }
+}
+
 HEADER.propTypes = {
   createNewList: React.PropTypes.func.isRequired,
 };
@@ -40,6 +70,11 @@ class MAIN extends Component {
   );
   }
 }
+class TodoItem extends Component {
+  render() {
+    return <li>{this.props.text}</li>;
+  }
+}
 
 class LIST extends Component {
   render() {
@@ -48,7 +83,7 @@ class LIST extends Component {
         {
   this.props.todoList.map(function (i) {
     return (
-      <li>{this.props.i['listItem']}</li>
+      <TodoItem listItem={i.listItem}/>
   );
   })
   }
@@ -56,46 +91,25 @@ class LIST extends Component {
   );
   }
 }
-
+class CountDisplay extends Component {
+  render() {
+    return (
+      <span className="todo-count">{this.props.count}</span>
+    );
+  }
+}
 class FOOTER extends Component {
   render() {
     return (
       <footer className="footer">
-        <span className="todo-count">{ this.props.count}</span>
+        <CountDisplay count={this.props.count} />
         <button className="clear-completed">Clear completed</button>
       </footer>
   );
   }
 }
 
-class TodoApp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { count: 0, todoList: [] };
 
-  // bind
-    this.createNewList = this.createNewList.bind(this);
-  }
-
-  createNewList(listItem) {
-    const newList = this.state.todoList.slice();
-    newList.push(listItem);
-    this.setState({
-      count: this.state.count + 1,
-      todoList: newList,
-    });
-  } // another way: this.setState({count: this.state.count+1;
-    // todoList: this.state.todoList.concat([{text: listItem}])})
-  render() {
-    return (
-      <section className="todoapp">
-        <HEADER createNewList={this.createNewList} / >
-        <MAIN count={this.state.count} todoList={this.state.todoList} / >
-        <FOOTER count={this.state.count} / >
-      </section>
-  );
-  }
-}
 
 ReactDOM.render(
   <TodoApp / >,
