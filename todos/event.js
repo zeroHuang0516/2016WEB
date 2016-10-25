@@ -104,11 +104,11 @@ function closeEvent(ele,ele2){
 	ele.remove();
 	if(ele2.value==""){
 		left--;
-		leftList.value=left+" items left";
+		leftList.value=left+" items left"; // 複數處理!!!!
 	}
 	else if(ele.value==">"){
 		left++;
-		leftList.value=left+" items left";
+		leftList.value=left+" items left"; //將Count作成API
 	}
 }
 
